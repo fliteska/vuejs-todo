@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>VueJs Todo App</title>
+        <meta name="author" content="Ian Derbyshire (Fliteska)">
+    </head>
+    <body>
+        <div id="vue-instance">
+            <!-- this will be the DOM element we will mount our VueJs instance to -->
+            <h1>VueJS Simple Todo App</h1>
+            <h3>Add New Item</h3>
+            <input type="text" v-model="defaultText" />
+            <button v-on:click="addItem">Add</button>
+            <h1>Todos</h1>
+            <ul>
+                <li v-for="(index, item) in items">
+                    <button v-on:click="removeItem(index)">X</button> {{ item }}
+                </li>
+            </ul>
+            <pre>{{ $data | json }}</pre>
+        </div>
+        <script src="http://cdn.jsdelivr.net/vue/1.0.16/vue.js"></script>
+
+        <script>
+            // our VueJs instance bound to the div with an id of vue-instance
+            var vm = new Vue({
+                el: '#vue-instance',
+                data: {
+                    defaultText: '',
+                    items: [
+                        'Learn VueJS',
+                        'Make something cool',
+                        'Make A Todo list'
+                    ],
+                    author: 'Ian Derbyshire (Fliteska)',
+                    repo: 'https://github.com/fliteska/vuejs-todo.git'
+                },
+                methods: {
+                    addItem: function() {
+                        this.items.push(this.defaultText);
+                        this.defaultText = '';
+                    },
+                    removeItem: function(i) {
+                        if (confirm('Are you sure you want to remove "' + this.items[i] + '"?')) {
+                            this.items.splice(i, 1);
+                        }
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
